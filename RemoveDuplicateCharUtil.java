@@ -3,71 +3,73 @@ package com.bilibili.juc.day02;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class RemoveDuplicateCharUtil {
 
     public static final int MIN_DUPLICATE_CHAR_LENGTH = 3;
     public static final int CHAR_A_TO_INT = 97;
     public static final char  CHAR_A = 'a';
-
+    public static final String LOWER_CHAR_REGEX = "[a-z]+";
+    public static final String ERROR_TIP = "请输入合法的字符串，只能包含a~z";
     public static List<String> arrayList = new ArrayList<>();
 
     public static void main(String[] args) {
         // 案例1  aabcccbbad
-        String case1 = "aabcccbbad";
+        String case1 = "aabcc8cbbad";
         List<Integer> charCountList1 = getDuplicateCharCount(case1, new ArrayList<>());
         removeDuplicateChar(case1, charCountList1);
-        System.out.println("案例1:"+ case1 + "结果1:" + arrayList.get(arrayList.size() - 1));
+        System.out.println("案例1:"+ case1 + "结果1:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
         arrayList.clear();
-
-        // 案例2  aabcccbbad
-        String case2 = "abcccbad";
-        List<Integer> charCountList2 = getDuplicateCharCount(case2, new ArrayList<>());
-        removeDuplicateChar(case2, charCountList2);
-        System.out.println("案例2:"+ case2 + "结果2:" + arrayList.get(arrayList.size() - 1));
-        arrayList.clear();
-
-        // 案例3  bbbbbbbbbbbb
-        String case3 = "bbbbbbbbbbbb";
-        List<Integer> charCountList3 = getDuplicateCharCount(case3, new ArrayList<>());
-        removeDuplicateChar(case3, charCountList3);
-        System.out.println("案例3:"+ case3 + "结果3:" + arrayList.get(arrayList.size() - 1));
-        arrayList.clear();
-
-        // 案例4  aabbccddeee
-        String case4 = "aabbccddeee";
-        List<Integer> charCountList4 = getDuplicateCharCount(case4, new ArrayList<>());
-        removeDuplicateChar(case4, charCountList4);
-        System.out.println("案例4:"+ case2 + "结果4:" + arrayList.get(arrayList.size() - 1));
-        arrayList.clear();
-
-        // 案例5  eeeaaabbdbbadbaadsajeyytk
-        String case5 = "eeeaaabbdbbadbaadsajeyytk";
-        List<Integer> charCountList5 = getDuplicateCharCount(case5, new ArrayList<>());
-        removeDuplicateChar(case5, charCountList5);
-        System.out.println("案例5:"+ case5 + "结果5:" + arrayList.get(arrayList.size() - 1));
-        arrayList.clear();
-
-        // 案例6  kajdhafehfueueuuuuuuuyeqeywqeyyyy
-        String case6 = "kajdhafehfueueuuuuuuuyeqeywqeyyyy";
-        List<Integer> charCountList6 = getDuplicateCharCount(case6, new ArrayList<>());
-        removeDuplicateChar(case6, charCountList6);
-        System.out.println("案例6:"+ case6 + "结果6:" + arrayList.get(arrayList.size() - 1));
-        arrayList.clear();
-
-        // 案例7  ""
-        String case7 = "";
-        List<Integer> charCountList7 = getDuplicateCharCount(case7, new ArrayList<>());
-        removeDuplicateChar(case7, charCountList7);
-        System.out.println("案例7:"+ case7 + "结果7:" + arrayList.get(arrayList.size() - 1));
-        arrayList.clear();
-
-        // 案例8  null
-        String case8 = null;
-        List<Integer> charCountList8 = getDuplicateCharCount(case7, new ArrayList<>());
-        removeDuplicateChar(case8, charCountList8);
-        System.out.println("案例8:"+ case7 + "结果8:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
-        arrayList.clear();
+//
+//        // 案例2  aabcccbbad
+//        String case2 = "abcccbad";
+//        List<Integer> charCountList2 = getDuplicateCharCount(case2, new ArrayList<>());
+//        removeDuplicateChar(case2, charCountList2);
+//        System.out.println("案例2:"+ case2 + "结果2:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
+//        arrayList.clear();
+//
+//        // 案例3  bbbbbbbbbbbb
+//        String case3 = "bbbbbbbbbbbb";
+//        List<Integer> charCountList3 = getDuplicateCharCount(case3, new ArrayList<>());
+//        removeDuplicateChar(case3, charCountList3);
+//        System.out.println("案例3:"+ case3 + "结果3:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
+//        arrayList.clear();
+//
+//        // 案例4  aabbccddeee
+//        String case4 = "aabbccddeee";
+//        List<Integer> charCountList4 = getDuplicateCharCount(case4, new ArrayList<>());
+//        removeDuplicateChar(case4, charCountList4);
+//        System.out.println("案例4:"+ case2 + "结果4:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
+//        arrayList.clear();
+//
+//        // 案例5  eeeaaabbdbbadbaadsajeyytk
+//        String case5 = "eeeaaabbdbbadbaadsajeyytk";
+//        List<Integer> charCountList5 = getDuplicateCharCount(case5, new ArrayList<>());
+//        removeDuplicateChar(case5, charCountList5);
+//        System.out.println("案例5:"+ case5 + "结果5:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
+//        arrayList.clear();
+//
+//        // 案例6  kajdhafehfueueuuuuuuuyeqeywqeyyyy
+//        String case6 = "kajdhafehfueueuuuuuuuyeqeywqeyyyy";
+//        List<Integer> charCountList6 = getDuplicateCharCount(case6, new ArrayList<>());
+//        removeDuplicateChar(case6, charCountList6);
+//        System.out.println("案例6:"+ case6 + "结果6:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
+//        arrayList.clear();
+//
+//        // 案例7  ""
+//        String case7 = "";
+//        List<Integer> charCountList7 = getDuplicateCharCount(case7, new ArrayList<>());
+//        removeDuplicateChar(case7, charCountList7);
+//        System.out.println("案例7:"+ case7 + "结果7:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
+//        arrayList.clear();
+//
+//        // 案例8  null
+//        String case8 = null;
+//        List<Integer> charCountList8 = getDuplicateCharCount(case7, new ArrayList<>());
+//        removeDuplicateChar(case8, charCountList8);
+//        System.out.println("案例8:"+ case7 + "结果8:" + (arrayList.size() == 0? "": arrayList.get(arrayList.size() - 1)));
+//        arrayList.clear();
     }
 
     /**
@@ -75,8 +77,12 @@ public class RemoveDuplicateCharUtil {
      * @param str 字符串
      * @param charCountList 统计列表
      */
-    public static void removeDuplicateChar(String str, List<Integer> charCountList){
+    public static void removeDuplicateChar (String str, List<Integer> charCountList){
         if(!Optional.ofNullable(str).isPresent()){
+            return;
+        }
+        if(!str.matches(LOWER_CHAR_REGEX)){
+            System.out.println(ERROR_TIP);
             return;
         }
         boolean continueFlag = false;
@@ -111,6 +117,9 @@ public class RemoveDuplicateCharUtil {
     public static List<Integer> getDuplicateCharCount(String str, List<Integer> charCountList){
         if(!Optional.ofNullable(str).isPresent()){
             return charCountList;
+        }
+        if(!str.matches(LOWER_CHAR_REGEX)){
+            System.out.println(ERROR_TIP);
         }
         char[] charArray  = str.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
